@@ -5,7 +5,10 @@
 
 #include <QtWidgets>
 
+MainWindow * MainWindow::pMainWindow = nullptr;
+
 MainWindow::MainWindow() {
+
     createActions();
 
     scene = new DiagramArea(this);
@@ -22,9 +25,15 @@ MainWindow::MainWindow() {
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
 
+    pMainWindow = this;
+
     setCentralWidget(widget);
     setWindowTitle(tr("Diagramarea"));
     setUnifiedTitleAndToolBarOnMac(true);
+}
+MainWindow * MainWindow::getMainWinPtr()
+{
+    return pMainWindow;
 }
 void MainWindow::backgroundButtonGroupClicked(QAbstractButton *button) {
     const QList<QAbstractButton *> buttons = backgroundButtonGroup->buttons();
@@ -94,7 +103,6 @@ void MainWindow::lineButtonTriggered() {
     scene->setLineColor(qvariant_cast<QColor>(lineAction->data()));
 }
 void MainWindow::createActions() {
-
     deleteAction = new QAction(QIcon(":/images/delete.png"), tr("&Delete"), this);
     deleteAction->setShortcut(tr("Delete"));
     deleteAction->setStatusTip(tr("Delete item from diagram"));
@@ -103,6 +111,7 @@ void MainWindow::createActions() {
 void MainWindow::createToolbars() {
     editToolBar = addToolBar(tr("Edit"));
     editToolBar->addAction(deleteAction);
+    editToolBar->setMovable(false);
 
     QToolButton *pointerButton = new QToolButton;
     pointerButton->setCheckable(true);
@@ -136,6 +145,7 @@ void MainWindow::createToolbars() {
     pointerToolBar->addWidget(linePointerButton);
     pointerToolBar->addWidget(nodeButton);
     pointerToolBar->addWidget(sceneScaleCombo);
+    pointerToolBar->setMovable(false);
 }
 
 

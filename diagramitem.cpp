@@ -61,3 +61,13 @@ QPixmap DiagramItem::image() const {
     return pixmap;
 }
 
+QVariant DiagramItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if (change == QGraphicsItem::ItemPositionChange) {
+        for (Edge *edge : qAsConst(edges))
+            edge->updatePosition();
+    }
+
+    return value;
+}
+

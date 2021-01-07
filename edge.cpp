@@ -1,11 +1,16 @@
 #include "edge.h"
 #include "diagramitem.h"
+#include "diagramtextitem.h"
+#include "mainwindow.h"
 
 #include <QPainter>
 #include <QPen>
 #include <QtMath>
 
 Edge::Edge(DiagramItem *startItem, DiagramItem *endItem, QGraphicsItem *parent) : QGraphicsLineItem(parent), myStartItem(startItem), myEndItem(endItem){
+    name = "apple";
+    label = new QGraphicsTextItem(this);
+    label->setPlainText(name);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 }
@@ -23,6 +28,8 @@ QPainterPath Edge::shape() const {
 void Edge::updatePosition() {
     QLineF line(mapFromItem(myStartItem, 0, 0), mapFromItem(myEndItem, 0, 0));
     setLine(line);
+    QPointF mid = line.center();
+    label->setPos(mid);
 }
 void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     if (myStartItem->collidesWithItem(myEndItem)) {
@@ -68,3 +75,11 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
         painter->drawLine(myLine);
     }
  }
+void Edge::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+    MainWindow * mw = MainWindow::getMainWinPtr();
+    QString text = QInputDialog::getText(mw, "Edge Information", "Edge Name", QLineEdit::Normal,name);
+    if(text != name) {
+        name = text;
+        label->setPlainText(name);
+    }
+}

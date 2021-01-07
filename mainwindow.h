@@ -28,6 +28,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
+    static MainWindow * getMainWinPtr();
 
 private slots:
     void backgroundButtonGroupClicked(QAbstractButton *button);
@@ -40,6 +41,8 @@ private slots:
     void itemSelected(QGraphicsItem *item);
 
 private:
+    static MainWindow * pMainWindow;
+
     void createActions();
     void createToolbars();
 

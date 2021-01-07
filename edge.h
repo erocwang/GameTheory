@@ -2,8 +2,12 @@
 #define EDGE_H
 
 #include <QGraphicsLineItem>
+#include <QInputDialog>
+#include <QGraphicsTextItem>
 
 class DiagramItem;
+
+class DiagramTextItem;
 
 class Edge : public QGraphicsLineItem{
 public:
@@ -25,15 +29,17 @@ public:
     DiagramItem *endItem() const {
         return myEndItem;
     }
-
     void updatePosition();
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 private:
     DiagramItem *myStartItem;
     DiagramItem *myEndItem;
     QPolygonF arrowHead;
     QColor myColor = Qt::black;
+    QString name;
+    QGraphicsTextItem * label;
 };
 
 #endif // EDGE_H

@@ -46,6 +46,7 @@ private:
     QGraphicsLineItem *line;
     QColor myItemColor;
     QColor myLineColor;
+    QVector<DiagramItem *> nodes;
 };
 
 #endif // DIAGRAMAREA_H
