@@ -39,7 +39,7 @@ private:
     QPolygonF arrowHead;
     QColor myColor = Qt::black;
     QString name;
-    QGraphicsTextItem * label;
+    QGraphicsTextItem * edgeLabel;
 };
 
 #endif // EDGE_H

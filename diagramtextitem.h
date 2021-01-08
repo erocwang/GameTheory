@@ -8,8 +8,7 @@ class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
 //! [0]
-class DiagramTextItem : public QGraphicsTextItem
-{
+class DiagramTextItem : public QGraphicsTextItem {
     Q_OBJECT
 
 public:

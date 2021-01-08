@@ -8,9 +8,9 @@
 #include <QtMath>
 
 Edge::Edge(DiagramItem *startItem, DiagramItem *endItem, QGraphicsItem *parent) : QGraphicsLineItem(parent), myStartItem(startItem), myEndItem(endItem){
-    name = "apple";
-    label = new QGraphicsTextItem(this);
-    label->setPlainText(name);
+    name = "";
+    edgeLabel = new QGraphicsTextItem(this);
+    edgeLabel->setPlainText(name);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 }
@@ -29,7 +29,7 @@ void Edge::updatePosition() {
     QLineF line(mapFromItem(myStartItem, 0, 0), mapFromItem(myEndItem, 0, 0));
     setLine(line);
     QPointF mid = line.center();
-    label->setPos(mid);
+    edgeLabel->setPos(mid);
 }
 void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     if (myStartItem->collidesWithItem(myEndItem)) {
@@ -80,6 +80,6 @@ void Edge::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
     QString text = QInputDialog::getText(mw, "Edge Information", "Edge Name", QLineEdit::Normal,name);
     if(text != name) {
         name = text;
-        label->setPlainText(name);
+        edgeLabel->setPlainText(name);
     }
 }

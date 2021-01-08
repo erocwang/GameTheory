@@ -11,7 +11,6 @@ CONFIG += c++11
 SOURCES += \
     diagramarea.cpp \
     diagramitem.cpp \
-    diagramtextitem.cpp \
     edge.cpp \
     main.cpp \
     mainwindow.cpp
@@ -19,7 +18,6 @@ SOURCES += \
 HEADERS += \
     diagramarea.h \
     diagramitem.h \
-    diagramtextitem.h \
     edge.h \
     mainwindow.h
 

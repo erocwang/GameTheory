@@ -1,13 +1,18 @@
+#include "mainwindow.h"
 #include "diagramitem.h"
 #include "edge.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
+#include <QStringList>
 #include <QMenu>
 #include <QPainter>
 
 DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent) : QGraphicsPolygonItem(parent), myDiagramType(diagramType) {
     QPainterPath path;
+    payoff = {0,0};
+    payoffLabel = new QGraphicsTextItem(this);
+    payoffLabel->setPos(-5,10);
     switch (myDiagramType) {
         case StartEnd:
             path.moveTo(200, 50);
@@ -69,5 +74,18 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change, const QVariant &valu
     }
 
     return value;
+}
+void DiagramItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+    MainWindow * mw = MainWindow::getMainWinPtr();
+    QString temp = "0,0";
+    if (payoff != make_pair(0,0)) {
+        temp = QString::fromStdString(to_string(payoff.first) + "," + to_string(payoff.second));
+    }
+    QString text = QInputDialog::getText(mw, "Node information", "Enter payoffs separated by a comma (e.g. 20,20)", QLineEdit::Normal,temp);
+    if(text != "0,0") {
+        QStringList res = text.split(",");
+        payoff = {res[0].toInt(),res[1].toInt()};
+        payoffLabel->setPlainText(text);
+    }
 }
 

@@ -2,7 +2,11 @@
 #define DIAGRAMITEM_H
 
 #include <QGraphicsPixmapItem>
+#include <QInputDialog>
+#include <QGraphicsTextItem>
 #include <QVector>
+
+using namespace std;
 
 QT_BEGIN_NAMESPACE
 class QPixmap;
@@ -33,11 +37,14 @@ public:
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     DiagramType myDiagramType;
     QPolygonF myPolygon;
     QVector<Edge*> edges;
+    pair<int,int> payoff;
+    QGraphicsTextItem * payoffLabel;
 };
 
 #endif // DIAGRAMITEM_H
