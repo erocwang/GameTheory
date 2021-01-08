@@ -42,9 +42,11 @@ protected:
 private:
     DiagramType myDiagramType;
     QPolygonF myPolygon;
+    QColor itemColor;
     QVector<Edge*> edges;
     pair<int,int> payoff;
     QGraphicsTextItem * payoffLabel;
+    bool player1;
 };
 
 #endif // DIAGRAMITEM_H

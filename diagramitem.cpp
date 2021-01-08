@@ -10,6 +10,9 @@
 
 DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent) : QGraphicsPolygonItem(parent), myDiagramType(diagramType) {
     QPainterPath path;
+    player1 = true;
+    itemColor = player1 ? Qt::black : Qt::blue;
+    this->setBrush(itemColor);
     payoff = {0,0};
     payoffLabel = new QGraphicsTextItem(this);
     payoffLabel->setPos(-5,10);
@@ -77,6 +80,17 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change, const QVariant &valu
 }
 void DiagramItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
     MainWindow * mw = MainWindow::getMainWinPtr();
+    QStringList players;
+    players << "Player 1 Action Node" << "Player 2 Action Node";
+    QString player = QInputDialog::getItem(mw, "Node information", "Choose which player acts on this node (no impact on leaf nodes)",players,!player1);
+    if (player == "Player 1 Action Node") {
+        player1 = true;
+        this->setBrush(Qt::black);
+    }
+    else {
+        player1 = false;
+        this->setBrush(Qt::blue);
+    }
     QString temp = "0,0";
     if (payoff != make_pair(0,0)) {
         temp = QString::fromStdString(to_string(payoff.first) + "," + to_string(payoff.second));
@@ -87,5 +101,6 @@ void DiagramItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
         payoff = {res[0].toInt(),res[1].toInt()};
         payoffLabel->setPlainText(text);
     }
+
 }
 
