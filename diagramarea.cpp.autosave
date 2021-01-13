@@ -103,8 +103,18 @@ QVector<Edge*> DiagramArea::solve() {
     QVector<Edge *> res;
     unordered_map<DiagramItem*,pair<int,int>> nodeValues;
     unordered_map<DiagramItem*,int> outGoingEdges;
+    unordered_set<DiagramItem*> visited; 
     for (DiagramItem* node : nodes) {
         nodeValues[node] = node->payoff;
+        outGoingEdges[node] = node->outEdges.size(); 
+    }
+    bool ch = true; 
+    while(ch) {
+        for (DiagramItem * node : nodes) {
+            if(!visited.count(node) && outGoingEdges[node] == 0) {
+                
+            }
+        }
     }
     return res;
 }

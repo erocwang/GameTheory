@@ -10,6 +10,7 @@
 
 DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent) : QGraphicsPolygonItem(parent), myDiagramType(diagramType) {
     QPainterPath path;
+    parentNode = nullptr;
     player1 = true;
     itemColor = player1 ? Qt::black : Qt::blue;
     this->setBrush(itemColor);
@@ -42,6 +43,7 @@ DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent) : QGrap
 
 void DiagramItem::removeEdge(Edge *edge) {
     edges.removeAll(edge);
+    outEdges.removeAll(edge);
 }
 
 void DiagramItem::removeEdges() {
@@ -56,6 +58,12 @@ void DiagramItem::removeEdges() {
 
 void DiagramItem::addEdge(Edge *edge) {
     edges.append(edge);
+    if (edge->getStartItem() == this) {
+        outEdges.append(edge);
+    }
+    else {
+        parentNode = edge->getStartItem();
+    }
 }
 
 QPixmap DiagramItem::image() const {

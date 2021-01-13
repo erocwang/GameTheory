@@ -34,6 +34,9 @@ public:
     int type() const override {
         return Type;
     }
+    pair<int,int> payoff;
+    QVector<Edge*> outEdges;
+    DiagramItem * parentNode;
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
@@ -44,7 +47,6 @@ private:
     QPolygonF myPolygon;
     QColor itemColor;
     QVector<Edge*> edges;
-    pair<int,int> payoff;
     QGraphicsTextItem * payoffLabel;
     bool player1;
 };

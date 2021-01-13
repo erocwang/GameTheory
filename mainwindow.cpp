@@ -4,6 +4,10 @@
 #include "mainwindow.h"
 
 #include <QtWidgets>
+#include <QPen>
+#include <QPainter>
+
+#include <bits/stdc++.h>
 
 MainWindow * MainWindow::pMainWindow = nullptr;
 
@@ -146,6 +150,13 @@ void MainWindow::createToolbars() {
     pointerToolBar->addWidget(nodeButton);
     pointerToolBar->addWidget(sceneScaleCombo);
     pointerToolBar->setMovable(false);
+}
+
+void MainWindow::solve() {
+    QVector<Edge*> res = scene->solve();
+    for (Edge * edge : res) {
+        edge->setColor(Qt::red);
+    }
 }
 
 

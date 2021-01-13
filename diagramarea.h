@@ -22,6 +22,8 @@ public:
 
     explicit DiagramArea(QObject *parent = nullptr);
 
+    QVector<Edge *> solve();
+
 public slots:
     void setMode(Mode mode);
     void setItemType(DiagramItem::DiagramType type);

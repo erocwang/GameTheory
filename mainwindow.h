@@ -67,5 +67,7 @@ private:
     QButtonGroup *backgroundButtonGroup;
     QAction *lineAction;
 
+    void solve();
+
 };
 #endif // MAINWINDOW_H

@@ -83,3 +83,7 @@ void Edge::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
         edgeLabel->setPlainText(name);
     }
 }
+
+DiagramItem * Edge::getStartItem() {
+    return myStartItem;
+}

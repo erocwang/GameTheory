@@ -30,6 +30,7 @@ public:
         return myEndItem;
     }
     void updatePosition();
+    DiagramItem* getStartItem();
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
