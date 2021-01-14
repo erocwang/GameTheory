@@ -6,6 +6,7 @@
 #include <QtWidgets>
 #include <QPen>
 #include <QPainter>
+#include <QDebug>
 
 #include <bits/stdc++.h>
 
@@ -111,11 +112,17 @@ void MainWindow::createActions() {
     deleteAction->setShortcut(tr("Delete"));
     deleteAction->setStatusTip(tr("Delete item from diagram"));
     connect(deleteAction, &QAction::triggered, this, &MainWindow::deleteItem);
+
+    solveAction = new QAction(QIcon(":/images/floodfill.png"), tr("&Solve"), this);
+    solveAction->setShortcut(tr("Solve"));
+    connect(solveAction, &QAction::triggered, this, &MainWindow::solve);
 }
 void MainWindow::createToolbars() {
     editToolBar = addToolBar(tr("Edit"));
     editToolBar->addAction(deleteAction);
     editToolBar->setMovable(false);
+
+    editToolBar->addAction(solveAction);
 
     QToolButton *pointerButton = new QToolButton;
     pointerButton->setCheckable(true);
@@ -128,6 +135,7 @@ void MainWindow::createToolbars() {
     QToolButton *nodeButton = new QToolButton;
     nodeButton->setCheckable(true);
     nodeButton->setIcon(QIcon(":/images/node.png"));
+
 
     pointerTypeGroup = new QButtonGroup(this);
     pointerTypeGroup->addButton(pointerButton, int(DiagramArea::MoveItem));

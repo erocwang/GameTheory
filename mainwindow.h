@@ -55,6 +55,7 @@ private:
     QAction *exitAction;
     QAction *addAction;
     QAction *deleteAction;
+    QAction *solveAction;
 
     QToolBar *editToolBar;
     QToolBar *pointerToolBar;

@@ -37,6 +37,8 @@ public:
     pair<int,int> payoff;
     QVector<Edge*> outEdges;
     DiagramItem * parentNode;
+    Edge * parentEdge;
+    bool player1;
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
@@ -48,7 +50,7 @@ private:
     QColor itemColor;
     QVector<Edge*> edges;
     QGraphicsTextItem * payoffLabel;
-    bool player1;
+
 };
 
 #endif // DIAGRAMITEM_H

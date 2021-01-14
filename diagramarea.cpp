@@ -3,6 +3,7 @@
 
 #include <QGraphicsSceneMouseEvent>
 #include <QTextCursor>
+#include <QDebug>
 
 #include <bits/stdc++.h>
 
@@ -103,9 +104,50 @@ QVector<Edge*> DiagramArea::solve() {
     QVector<Edge *> res;
     unordered_map<DiagramItem*,pair<int,int>> nodeValues;
     unordered_map<DiagramItem*,int> outGoingEdges;
+    unordered_set<DiagramItem*> visited;
     for (DiagramItem* node : nodes) {
         nodeValues[node] = node->payoff;
+        outGoingEdges[node] = node->outEdges.size();
     }
+    while(true) {
+        QList<DiagramItem *> toProcess;
+        unordered_map<DiagramItem*,Edge*> chosenEdges;
+        for(DiagramItem * node : nodes) {
+            if(!visited.count(node) && node->parentNode!=nullptr && outGoingEdges[node] == 0) {
+                visited.insert(node);
+                toProcess.append(node);
+            }
+        }
+        if(toProcess.size()==0) {
+            break;
+        }
+        else {
+            qDebug() << "process nodes " << toProcess.size();
+            for (DiagramItem * node : toProcess) {
+                outGoingEdges[node->parentNode]--;
+                pair<int,int> temp = node->payoff;
+                qDebug() << "payoff " << temp.first << " " << temp.second;
+                if(node->parentNode->player1) {
+                    qDebug("parent is p1");
+                    if (temp.first > node->parentNode->payoff.first) {
+                        qDebug("found edge");
+                        nodeValues[node->parentNode] = node->payoff;
+                        chosenEdges[node->parentNode] = node->parentEdge;
+                    }
+                }
+                else {
+                    if (temp.second > node->parentNode->payoff.second) {
+                        nodeValues[node->parentNode] = node->payoff;
+                        chosenEdges[node->parentNode] = node->parentEdge;
+                    }
+                }
+            }
+        }
+        for(auto& p : chosenEdges) {
+            res.push_back(p.second);
+        }
+    }
+    qDebug() << "result size " << res.size();
     return res;
 }
 

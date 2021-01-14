@@ -7,10 +7,13 @@
 #include <QStringList>
 #include <QMenu>
 #include <QPainter>
+#include <QDebug>
 
 DiagramItem::DiagramItem(DiagramType diagramType, QGraphicsItem *parent) : QGraphicsPolygonItem(parent), myDiagramType(diagramType) {
     QPainterPath path;
     parentNode = nullptr;
+    parentEdge = nullptr;
+    outEdges = {};
     player1 = true;
     itemColor = player1 ? Qt::black : Qt::blue;
     this->setBrush(itemColor);
@@ -48,6 +51,7 @@ void DiagramItem::removeEdge(Edge *edge) {
 
 void DiagramItem::removeEdges() {
     const auto edgesCopy = edges;
+    parentEdge = nullptr;
     for (Edge *edge : edgesCopy) {
         edge->startItem()->removeEdge(edge);
         edge->endItem()->removeEdge(edge);
@@ -63,6 +67,7 @@ void DiagramItem::addEdge(Edge *edge) {
     }
     else {
         parentNode = edge->getStartItem();
+        parentEdge = edge;
     }
 }
 
@@ -83,7 +88,6 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change, const QVariant &valu
         for (Edge *edge : qAsConst(edges))
             edge->updatePosition();
     }
-
     return value;
 }
 void DiagramItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
@@ -107,8 +111,8 @@ void DiagramItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
     if(text != "0,0") {
         QStringList res = text.split(",");
         payoff = {res[0].toInt(),res[1].toInt()};
+        qDebug() << payoff.first << " " << payoff.second;
         payoffLabel->setPlainText(text);
     }
-
 }
 
