@@ -69,6 +69,7 @@ private:
     QAction *lineAction;
 
     void solve();
+    void resetColors();
 
 };
 #endif // MAINWINDOW_H

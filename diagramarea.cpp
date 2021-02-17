@@ -125,7 +125,7 @@ QVector<Edge*> DiagramArea::solve() {
             qDebug() << "process nodes " << toProcess.size();
             for (DiagramItem * node : toProcess) {
                 outGoingEdges[node->parentNode]--;
-                pair<int,int> temp = node->payoff;
+                pair<int,int> temp = nodeValues[node];
                 qDebug() << "payoff " << temp.first << " " << temp.second;
                 if(node->parentNode->player1) {
                     qDebug("parent is p1");

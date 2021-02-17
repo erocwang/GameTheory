@@ -164,7 +164,12 @@ void MainWindow::solve() {
     QVector<Edge*> res = scene->solve();
     for (Edge * edge : res) {
         edge->setColor(Qt::red);
+        edge->updatePosition();
     }
+}
+
+void MainWindow::resetColors() {
+
 }
 
 
